@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # 输入格式：登录类型(in、out)，运营商(ctcc-电信、cmcc-移动、cucc-联通、njupt-校园网)，账号，密码
 
 # 登录类型
@@ -19,6 +18,15 @@ logip=
 
 # 运营商标识
 loginisp=
+
+# wlanacname
+wlanacname=${5-"xl"}
+if [ "$wlanacname" = "spl" ]
+then
+	wlanacname=SPL_ME60
+else
+	wlanacname=XL_ME60
+fi
 
 # 执行登录操作
 if [ "$logintype" = "in"  ]
@@ -117,7 +125,7 @@ then
 	##########################################
 	
 	# 登录操作
-	curl "http://p.njupt.edu.cn:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=p.njupt.edu.cn&iTermType=1&wlanlogip=${loginip}&wlanacip=null&wlanacname=XL_ME60&mac=00-00-00-00-00-00&ip=${loginip}&enAdvert=0&queryACIP=0&loginMethod=1" --data "DDDDD=${loginname}&upass=${loginpwd}&R1=0&R2=0&R3=0&R6=0&para=00&0MKKey=123456&buttonClicked=&redirect_url=&err_flag=&username=&password=&user=&cmd=&Login=&v6ip="
+	curl "http://p.njupt.edu.cn:801/eportal/?c=ACSetting&a=Login&protocol=http:&hostname=p.njupt.edu.cn&iTermType=1&wlanlogip=${loginip}&wlanacip=null&wlanacname=${wlanacname}&mac=00-00-00-00-00-00&ip=${loginip}&enAdvert=0&queryACIP=0&loginMethod=1" --data "DDDDD=${loginname}&upass=${loginpwd}&R1=0&R2=0&R3=0&R6=0&para=00&0MKKey=123456&buttonClicked=&redirect_url=&err_flag=&username=&password=&user=&cmd=&Login=&v6ip="
 	
 # 执行退出操作
 elif [ "$logintype" = "out" ] 
